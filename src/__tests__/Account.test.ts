@@ -16,8 +16,8 @@ describe('Accounts', () => {
     })
 
     it('checks if a wallet has enough funds for a registration tx', async () => {
-      const isEnoughFunded = await zksync.isEnoughFundedToRegister()
-      expect(typeof isEnoughFunded).toBe('boolean')
+      const { hasEnoughFundsToRegister } = await zksync.isEnoughFundedToRegister()
+      expect(typeof hasEnoughFundsToRegister).toBe('boolean')
     })
 
   })
