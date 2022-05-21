@@ -52,16 +52,12 @@ class ZkSyncAccount {
     }
   }
 
-  transfer = async ({
-                      to,
-                      amount,
-                      fee,
-                      token,
-                    }: { to: string, amount: string, fee: string, token: string }) => {
-    const closestPackableAmount = zksync.utils.closestPackableTransactionAmount(ethers.utils.parseEther(amount))
-    const closestPackableFee = zksync.utils.closestPackableTransactionFee(ethers.utils.parseEther(fee))
+  transfer = async ({ to, amount, token }: { to: string, amount: string, token: string }) => {
+    const _amount = zksync.utils.closestPackableTransactionAmount(ethers.utils.parseEther(amount))
 
-    const tx = await this.wallet.syncTransfer({ to, token, amount: closestPackableAmount, fee: closestPackableFee })
+    const { totalFee: fee } = await this.wallet.provider.getTransactionFee('Transfer', this.wallet.address(), token)
+
+    const tx = await this.wallet.syncTransfer({ to, token, amount: _amount, fee })
     const receipt = await tx.awaitReceipt()
 
     console.log('Got transfer receipt.', receipt)
