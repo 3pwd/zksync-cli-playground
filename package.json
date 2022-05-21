@@ -7,8 +7,9 @@
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "build:watch": "tsc -w -p tsconfig.build.json",
+    "cli": "yarn build && yarn start",
     "start": "node dist/index",
-    "cli": "yarn build && yarn start"
+    "test": "jest"
   },
   "devDependencies": {
     "@types/jest": "^27.5.1",
